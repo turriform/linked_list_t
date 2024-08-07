@@ -39,7 +39,7 @@ ll->push(node_t *)
 ```
 by pushing node
 
-Simple usage:
+Simple usage O(n^2):
 
 ```
 long int arr[] = {1, 2, 3, 4, 5};
@@ -53,3 +53,24 @@ for (size_t i = 0; i != arr_sz; i++)
 ll->free(ll);
 
 ```
+
+O(n)
+
+```
+
+long int arr[] = {1, 2, 3, 4, 5};
+size_t arr_sz = sizeof(arr) / sizeof(*arr);
+
+node_t *tail = node_create_from_data(NODE_DATA_PARAMS(arr[0]));
+
+ll->set_head(ll, tail);
+
+for (size_t i = 1; i != arr_sz; i++)
+{
+    tail->add_next(tail, node_create_from_data(NODE_DATA_PARAMS(arr[i])));
+    tail = tail->next;
+}
+
+ll->free(ll);
+
+```    

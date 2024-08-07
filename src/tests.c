@@ -352,14 +352,24 @@ void test_init()
 
     linked_list_t *ll = linked_list_create();
     // 1 -- adding initial elements to the linked_list
-    // push is add_element equivelent from asm code
+    // ll->push is add_element equivelent from asm code
+    
+    // O(n^2)
+    //  for (size_t i = 0; i != data_length; i++)
+    //      ll->push(ll, node_create_from_data(NODE_DATA_PARAMS(data[i])));
 
-    for (size_t i = 0; i != data_length; i++)
-        ll->push(ll, node_create_from_data(NODE_DATA_PARAMS(data[i])));
+    // 0(n)
+    node_t *tail = node_create_from_data(NODE_DATA_PARAMS(data[0]));
+    ll->set_head(ll, tail);
+    for (size_t i = 1; i != data_length; i++)
+    {
+        tail->add_next(tail, node_create_from_data(NODE_DATA_PARAMS(data[i])));
+        tail = tail->next;
+    }
 
     // m - takes print_int to display int
     // chain_print is print equivelent from asm code
-    
+
     ll->head->chain_print(ll->head);
     /*
         f - filter function equivelent
@@ -368,7 +378,7 @@ void test_init()
         return value & 1;}
     */
     ll->filter(ll, is_even);
-    
+
     ll->head->chain_print(ll->head);
 
     // frees linked list
